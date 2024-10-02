@@ -134,17 +134,5 @@ public class DataManager {
             System.out.println("TA not found in the system.");
         }
     }
-
-    public void removeUser(User user)
-    {
-        if (user instanceof Student)
-        {
-            studentData.remove(user.getEmail());
-        }
-        else if (user instanceof TA)
-        {
-            taList.remove(user);  // Also remove from TA list
-        }
-    }
 }
  

@@ -47,20 +47,4 @@ public class LoginManager {
         
         return loggedInUser;
     }
-
-//    public void removeUser(User user) {
-//        if (users.containsKey(user.getEmail())) {
-//            users.remove(user.getEmail());
-//            System.out.println("User " + user.getName() + " removed from login system.");
-//        } else {
-//            System.out.println("User not found in login system.");
-//        }
-//    }
-//
-//    // Method to list all registered users
-//    public void listRegisteredUsers() {
-//        for (String email : users.keySet()) {
-//            System.out.println("Registered User: " + users.get(email).getName());
-//        }
-//    }
 }

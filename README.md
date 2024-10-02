@@ -1,17 +1,16 @@
-   # AP-Assignment2-2023051
+# AP-Assignment2-2023051
 
-# Generic Feedback System, Enhanced User Role Management, and Robust Exception Handling
 
 ## Overview
 
 This project implements three key features:
-1. *Generic Feedback System*: Students can provide feedback on completed courses using a generic class that can handle various types of feedback, such as numeric ratings and textual comments.
-2. *Enhanced User Role Management*: A new user role, *Teaching Assistant (TA)*, is introduced, which inherits from the Student class and has additional functionalities related to assisting professors with grading.
+1. *Generic Feedback System*: Students can provide feedback on completed courses using a generic class that can handle two types of feedback: Numeric ratings and Textual comments.
+2. *Enhanced User Role Management*: A new user role, *TA (Teaching Assistant)*, is introduced, which inherits from the Student class and has additional functionalities related to assisting professors with grading.
 3. *Robust Exception Handling*: Custom exception handling is added to manage invalid course registrations, login failures, and course drop deadline violations.
 
 ---
 
-## 1. Generic Feedback System (20 marks)
+## 1. Generic Feedback System
 
 ### Concept
 The Generic Feedback System uses *Generic Programming* to manage different types of feedback provided by students on completed courses.
@@ -25,18 +24,19 @@ The Generic Feedback System uses *Generic Programming* to manage different types
     - Students can provide feedback after completing a course using the addFeedback method in the Student class.
     - The Feedback class is designed to accept any type of feedback, which is added to the course's feedbackList.
     - Professors can view all feedback provided by students for their courses.
+    - Feedbacks are anonymous
 
 ### Key Classes
-- Feedback<T>: A generic class to store feedback.
+- Feedback: A generic class to store feedback.
 - Student: A class where students can add feedback on completed courses.
 - Course: Stores the feedback associated with each course.
 
 ---
 
-## 2. Enhanced User Role Management with Object Class (20 marks)
+## 2. Enhanced User Role Management with Object Class
 
 ### Concept
-*Object-Oriented Programming* and *Inheritance* are used to introduce a new role: the *Teaching Assistant (TA)*, which extends the Student class with additional functionalities.
+*Object-Oriented Programming* and *Inheritance* are used to introduce a new role: the *TA (Teaching Assistant)*, which extends the Student class with additional functionalities.
 
 ### Solution
 - *TA Class*:
@@ -49,12 +49,10 @@ The Generic Feedback System uses *Generic Programming* to manage different types
 
 ### Key Classes
 - TA: Inherits from Student and adds methods for assisting professors with grading.
-- Professor: Can view feedback and manage courses and grades.
-- Admin: Manages overall system operations.
 
 ---
 
-## 3. Robust Exception Handling for Course Registration and Login (20 marks)
+## 3. Robust Exception Handling for Course Registration and Login
 
 ### Concept
 *Exception Handling* is used to ensure that the system gracefully handles errors and abnormal conditions.
@@ -80,8 +78,11 @@ The Generic Feedback System uses *Generic Programming* to manage different types
 ## Usage
 
 ### 1. Running the Program
-- The program contains various classes for managing students, professors, courses, TAs, and handling feedback.
+- The program contains various classes for managing students, professors, courses, TAs, handling feedback etc.
 - Each user type can interact with the system according to their role and privileges.
+- When the program starts, it asks for login or signup. Some data has been initialized with seedData function.
+- I have included two functions which test TA functionality and Feedback functionality automatically in the beginning of each run
+
 
 ### 2. Exception Handling
 - The system uses custom exceptions to manage errors, and appropriate try-catch blocks are used to catch and handle these exceptions gracefully.
@@ -90,11 +91,18 @@ The Generic Feedback System uses *Generic Programming* to manage different types
 - After completing a course, a student can use the addFeedback() method to provide feedback. Feedback can be either numeric ratings or textual comments, and professors can later view this feedback.
 
 ### 4. Managing Roles
-- Teaching Assistants (TAs) have been added to the system with specific roles. They inherit from the Student class but have added responsibilities like managing student grades.
+- Teaching Assistants (TAs) have been added to the system with specific roles. They inherit from the Student class but have added responsibilities of managing student grades.
 
 ---
 
-## Key Highlights
-- *Generic Programming*: Allows for flexible feedback storage and management.
-- *Inheritance and Role Management*: The TA role is introduced using inheritance, extending the functionality of the Student class while limiting privileges compared to professors.
-- *Custom Exception Handling*: Robust handling of common error scenarios, making the system more reliable and user-friendly.****
+## Assumptions
+- A student can only be made into a TA by a professor of the course.
+- The student must have 9 or 10 grade in the course in order to be eligible for TAship of that course.
+- A student can add feedback only to those courses that they have completed.
+- The student can add feedback however many times they want.
+- Feedbacks are anonymous and hence, professors can only see the content of the feedback, not the student's details who left the feedback
+
+---
+
+### Name: Aditya Verma
+### Roll Number: 2023051

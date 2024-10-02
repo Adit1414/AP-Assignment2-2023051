@@ -224,23 +224,6 @@ public class Professor extends User
         }
     }
 
-//    public void removeTA(String email)
-//    {
-//        DataManager dataManager = DataManager.getInstance();
-//        TA ta = (TA)dataManager.getUserByEmail(email);
-//        List<TA> taList = dataManager.getTAsByCourse(this.course);
-//
-//        if (taList.contains(ta))
-//        {
-//            dataManager.removeTA(ta);
-//            System.out.println("TA " + ta.getName() + " has been removed.");
-//        }
-//        else
-//        {
-//            System.out.println("TA not found or not assigned to your course.");
-//        }
-//    }
-
     public void viewStudentsEligibleForTA()
     {
         List<Student> students = DataManager.getInstance().getAllUsers(Student.class);
