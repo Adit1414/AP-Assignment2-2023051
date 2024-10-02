@@ -8,8 +8,7 @@ public class Main
     private static LoginManager loginManager = new LoginManager();
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) throws InvalidLoginException, CourseFullException {
         boolean exit = false;
 
         seedData();
@@ -42,8 +41,7 @@ public class Main
         }
     }
 
-    private static void loginUser() 
-    {
+    private static void loginUser() throws InvalidLoginException, CourseFullException {
         
         System.out.println("\nLog In");
         System.out.println("Enter your email: ");
@@ -141,8 +139,7 @@ public class Main
     
 
     // Student Menu
-    private static void studentMenu(Student student) 
-    {
+    private static void studentMenu(Student student) throws CourseFullException {
         boolean exit = false;
 
         while (!exit) 
@@ -291,7 +288,7 @@ public class Main
                     scanner.nextLine();
                     if(rating<6 && rating>0)
                     {
-                        Feedback<Integer>fbi =new Feedback<Integer>(rating);
+                        Feedback<Integer>fbi = new Feedback<>(rating);
                         student.addFeedback(courseCode,fbi);
                         break;
                     }
@@ -302,7 +299,7 @@ public class Main
                     courseCode = scanner.nextLine();
                     System.out.println("Comment a feedback: ");
                     String comment = scanner.nextLine();
-                    Feedback<String>fbs =new Feedback<String>(comment);
+                    Feedback<String>fbs = new Feedback<>(comment);
                     student.addFeedback(courseCode,fbs);
                     break;
 
@@ -553,8 +550,7 @@ public class Main
         }
     }
 
-    private static void taMenu(TA ta)
-    {
+    private static void taMenu(TA ta) throws CourseFullException {
         boolean exit = false;
 
         while (!exit) {
@@ -703,7 +699,7 @@ public class Main
                     int rating = scanner.nextInt();
                     scanner.nextLine();
                     if (rating < 6 && rating > 0) {
-                        Feedback<Integer> fbi = new Feedback<Integer>(rating);
+                        Feedback<Integer> fbi = new Feedback<>(rating);
                         ta.addFeedback(courseCode, fbi);
                         break;
                     }
@@ -714,7 +710,7 @@ public class Main
                     courseCode = scanner.nextLine();
                     System.out.println("Comment a feedback: ");
                     String comment = scanner.nextLine();
-                    Feedback<String> fbs = new Feedback<String>(comment);
+                    Feedback<String> fbs = new Feedback<>(comment);
                     ta.addFeedback(courseCode, fbs);
                     break;
                 // TA functionality
@@ -799,8 +795,7 @@ public class Main
         loginManager.signUp(professor7);
     }
 
-    private static void testTA()
-    {
+    private static void testTA() throws CourseFullException {
         Course course1 = new Course("Linear Algebra", "M101", "Professor One", 1, 4, null);
         dataManager.addCourse(course1);
 

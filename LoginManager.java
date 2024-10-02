@@ -34,14 +34,12 @@ public class LoginManager {
     }
 
     // Method for login
-    public User login(String email, String password) {
+    public User login(String email, String password) throws InvalidLoginException {
         if (!this.credentials.containsKey(email)) {
-            System.out.println("Email not found. Please Sign Up.");
-            return null;
+            throw new InvalidLoginException("Email not found. Please sign up.");
         }
         if (!this.credentials.get(email).equals(password)) {
-            System.out.println("Invalid password.");
-            return null;
+            throw new InvalidLoginException("Invalid password.");
         }
 
         User loggedInUser = users.get(email);
@@ -50,19 +48,19 @@ public class LoginManager {
         return loggedInUser;
     }
 
-    public void removeUser(User user) {
-        if (users.containsKey(user.getEmail())) {
-            users.remove(user.getEmail());
-            System.out.println("User " + user.getName() + " removed from login system.");
-        } else {
-            System.out.println("User not found in login system.");
-        }
-    }
-
-    // Method to list all registered users
-    public void listRegisteredUsers() {
-        for (String email : users.keySet()) {
-            System.out.println("Registered User: " + users.get(email).getName());
-        }
-    }
+//    public void removeUser(User user) {
+//        if (users.containsKey(user.getEmail())) {
+//            users.remove(user.getEmail());
+//            System.out.println("User " + user.getName() + " removed from login system.");
+//        } else {
+//            System.out.println("User not found in login system.");
+//        }
+//    }
+//
+//    // Method to list all registered users
+//    public void listRegisteredUsers() {
+//        for (String email : users.keySet()) {
+//            System.out.println("Registered User: " + users.get(email).getName());
+//        }
+//    }
 }

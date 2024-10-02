@@ -1,8 +1,7 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Admin extends User implements CourseViewer {
+public class Admin extends User {
     private DataManager dataManager;
     private List<Course> courseList;
 

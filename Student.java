@@ -1,12 +1,10 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Iterator;
 
-public class Student extends User implements CourseViewer{ //Inheritance
+public class Student extends User { //Inheritance
     private int semester;
-    private int rollNo;
+    private final int rollNo;
     private List<Course> completedCourses; //course is association
     private List<Course> currentCourses;
     private List<Complaint> complaints;
@@ -198,7 +196,6 @@ public class Student extends User implements CourseViewer{ //Inheritance
         }
         if (!check) {
             System.out.println("No courses Available.");
-            return;
         }
     }
 
@@ -255,7 +252,6 @@ public class Student extends User implements CourseViewer{ //Inheritance
         }
         if (!check){
             System.out.println("Grades not received for this semester yet.");
-            return;
         }
     }
 
@@ -302,7 +298,7 @@ public class Student extends User implements CourseViewer{ //Inheritance
         this.viewGrades();
         System.out.println("CGPA of Student " + this.getName() + " is " + this.calculateCgpa());
     }
-    public void registerCourse(String code) {
+    public void registerCourse(String code) throws CourseFullException {
         // This method will register a course for the student
         List<Course> courseList = DataManager.getInstance().getCourseList();
 
@@ -333,6 +329,11 @@ public class Student extends User implements CourseViewer{ //Inheritance
             System.out.println("This Course is not available in this semester");
             return;
         }
+
+        if (course.getStudents().size() >= course.getMaxEnrolments()) {
+            throw new CourseFullException("Course " + course.getCode() + " is full.");
+        }
+
         int totalCredits = this.currentCourses.stream().mapToInt(Course::getCredits).sum();
         if (totalCredits + course.getCredits() > 20) {
             System.out.println("You cannot register for more than 20 credits.");
@@ -347,9 +348,7 @@ public class Student extends User implements CourseViewer{ //Inheritance
         if(course.addStudent(this)){
             this.currentCourses.add(course);
             System.out.println("Course registered: " + course.getTitle());
-            return;
         }
-        else return;
     }
     
     public void dropCourse(String code) {
