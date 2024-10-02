@@ -9,4 +9,9 @@ public class Feedback<T>
     public T getFeedback() {
         return feedback;
     }
+
+    @Override
+    public String toString() {
+        return feedback.toString();
+    }
 }

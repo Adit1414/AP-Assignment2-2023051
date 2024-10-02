@@ -405,7 +405,7 @@ public class Student extends User { //Inheritance
     }
 
 
-    public void addFeedback(String code, Feedback<?> feedback){
+    public void addFeedback(String code, Object fb){
         Course course = null;
         for(Course c : this.completedCourses)
         {
@@ -415,6 +415,7 @@ public class Student extends User { //Inheritance
                 break;
             }
         }
+        Feedback<Object> feedback = new Feedback<>(fb);
         if(course != null)
         {
             course.addFeedback(feedback);

@@ -12,6 +12,7 @@ public class Main
         boolean exit = false;
 
         seedData();
+        testFeedback();
         testTA();
 
         while (!exit) 
@@ -41,7 +42,7 @@ public class Main
         }
     }
 
-    private static void loginUser() throws InvalidLoginException, CourseFullException {
+    private static void loginUser() throws InvalidLoginException{
         
         System.out.println("\nLog In");
         System.out.println("Enter your email: ");
@@ -50,40 +51,50 @@ public class Main
         String email = scanner.nextLine();
         System.out.println("Enter your password: ");
         String password = scanner.nextLine();
-        User user = loginManager.login(email, password);
-        if (user != null) 
-        {
-            System.out.println("\nLogin successful!");
-
-            // Determine user type and show respective menu
-            if (user instanceof Student)
+        try
+        {User user = loginManager.login(email, password);
+            if (user != null)
             {
-                Student student = (Student) user;
-                if (student.isTa())
+                System.out.println("\nLogin successful!");
+
+                // Determine user type and show respective menu
+                if (user instanceof Student)
                 {
-                    taMenu(student.getTa());
+                    Student student = (Student) user;
+                    if (student.isTa())
+                    {
+                        taMenu(student.getTa());
+                    }
+                    else
+                    {
+                        studentMenu(student);
+                    }
+                }
+                else if (user instanceof Professor)
+                {
+                    professorMenu((Professor) user);
+                }
+                else if (user instanceof Admin)
+                {
+                    adminMenu((Admin) user);
                 }
                 else
                 {
-                    studentMenu(student);
+                    System.out.println("Unrecognized role.");
                 }
             }
-            else if (user instanceof Professor) 
+            else
             {
-                professorMenu((Professor) user);
-            } 
-            else if (user instanceof Admin) 
-            {
-                adminMenu((Admin) user);
-            } 
-            else 
-            {
-                System.out.println("Unrecognized role.");
+                throw new InvalidLoginException("Login failed.");
             }
-        } 
-        else 
+        }
+        catch (InvalidLoginException e)
         {
-            System.out.println("Login failed. Please check your credentials.");
+            System.out.println("Login failed: " + e.getMessage());
+        }
+        catch (CourseFullException e)
+        {
+            System.out.println("Error: The course is full. " + e.getMessage());
         }
     }
 
@@ -259,7 +270,14 @@ public class Main
                 case "3e":
                     System.out.print("Enter course code to register: ");
                     String courseToRegister = scanner.nextLine();
-                    student.registerCourse(courseToRegister);
+                    try
+                    {
+                        student.registerCourse(courseToRegister);
+                    }
+                    catch (CourseFullException e)
+                    {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case "3f":
                     System.out.print("Enter course code to drop: ");
@@ -671,7 +689,14 @@ public class Main
                 case "3e":
                     System.out.print("Enter course code to register: ");
                     String courseToRegister = scanner.nextLine();
-                    ta.registerCourse(courseToRegister);
+                    try
+                    {
+                        ta.registerCourse(courseToRegister);
+                    }
+                    catch (CourseFullException e)
+                    {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case "3f":
                     System.out.print("Enter course code to drop: ");
@@ -759,8 +784,8 @@ public class Main
         
 //        Course course1 = new Course("Linear Algebra", "M101", "Professor One", 1, 4, null);
 //        dataManager.addCourse(course1);
-        Course course2 = new Course("Digital Circuits", "ECE101", "Professor Two", 1, 4, null);
-        dataManager.addCourse(course2);
+//        Course course2 = new Course("Digital Circuits", "ECE101", "Professor Two", 1, 4, null);
+//        dataManager.addCourse(course2);
         Course course3 = new Course("Introduction to Programming", "CSE101", "Professor Three", 1, 4, null);
         dataManager.addCourse(course3);
         Course course4 = new Course("Competetive Programming 1", "CSE211", "Professor Four", 2, 2, null);
@@ -775,9 +800,9 @@ public class Main
 //        Professor professor1 = new Professor("prof1@iiitd.edu", "profpass1", "Professor One", course1);
 //        dataManager.addUser(professor1);
 //        loginManager.signUp(professor1);
-        Professor professor2 = new Professor("prof2@iiitd.edu", "profpass2", "Professor Two", course2);
-        dataManager.addUser(professor2);
-        loginManager.signUp(professor2);
+//        Professor professor2 = new Professor("prof2@iiitd.edu", "profpass2", "Professor Two", course2);
+//        dataManager.addUser(professor2);
+//        loginManager.signUp(professor2);
         Professor professor3 = new Professor("prof3@iiitd.edu", "profpass3", "Professor Three", course3);
         dataManager.addUser(professor3);
         loginManager.signUp(professor3);
@@ -795,21 +820,57 @@ public class Main
         loginManager.signUp(professor7);
     }
 
-    private static void testTA() throws CourseFullException {
+    private static void testFeedback() throws CourseFullException
+    {
+        System.out.println();
         Course course1 = new Course("Linear Algebra", "M101", "Professor One", 1, 4, null);
         dataManager.addCourse(course1);
 
-        Student tester = new Student("1", "1", "1", 2024104);
+        Student tester = new Student("2", "2", "2", 2024105);
         dataManager.addUser(tester);
         loginManager.signUp(tester);
-        tester.registerCourse("M101");
+        try
+        {
+            tester.registerCourse("M101");
+        }
+        catch (CourseFullException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
 
         Professor professor1 = new Professor("proftest", "prof", "Professor One", course1);
         dataManager.addUser(professor1);
         loginManager.signUp(professor1);
 
-        professor1.assignGrade("1",10);
-        professor1.addTA("1");
+        professor1.assignGrade("2",10);
+        tester.addFeedback("M101",4);
+        tester.addFeedback("M101","abc");
+        professor1.viewFeedbacks();
+        System.out.println();
+    }
+
+    private static void testTA() throws CourseFullException {
+        Course course2 = new Course("Digital Circuits", "ECE101", "Professor Two", 1, 4, null);
+        dataManager.addCourse(course2);
+
+        Student tester = new Student("1", "1", "1", 2024104);
+        dataManager.addUser(tester);
+        loginManager.signUp(tester);
+        try
+        {
+            tester.registerCourse("ECE101");
+        }
+        catch (CourseFullException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        Professor professor2 = new Professor("prof2@iiitd.edu", "profpass2", "Professor Two", course2);
+        dataManager.addUser(professor2);
+        loginManager.signUp(professor2);
+
+        professor2.assignGrade("1",10);
+        professor2.addTA("1");
         DataManager.getInstance().viewTaList();
     }
 }

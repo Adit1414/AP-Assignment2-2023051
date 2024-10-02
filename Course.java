@@ -29,7 +29,7 @@ public class Course {
         this.enrolledStudents = new ArrayList<>();
         this.weeklySchedule = new ArrayList<>();
         this.studentGrades = new HashMap<>();
-        this.maxEnrolments = 30; 
+        this.maxEnrolments = 30;
         this.startTime = "0000";
         this.endTime = "0001";
         this.feedbackList = new ArrayList<>();
